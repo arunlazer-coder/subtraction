@@ -6,11 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer)
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <ToastContainer  transition={Zoom}/>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
