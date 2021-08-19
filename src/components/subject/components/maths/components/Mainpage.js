@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Validation from '../../../../../utils/Validator'
 import axios from 'axios';
+import { toast } from "react-toastify";
+
 class Mainpage extends Component {
   constructor(props) {
     super(props);
@@ -68,17 +70,20 @@ class Mainpage extends Component {
   };
 
   saveDataApi = () => {
-    let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
-    axios.post(`https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths`, {
-      name:this.props.loggedInUser,
-      type:this.props.symbol,
-      subType:this.props.location.pathname.split('/')[3],
-      correct:xD,
-      wrong:10-xD
-    })
-    .then(res => {
-      this.setState({ showAnswers: true })
-    })
+    toast("Invalid Login !", { position: "top-center" });
+    this.setState({ showAnswers: true })
+    
+    // let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
+    // axios.post(`https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths`, {
+    //   name:this.props.loggedInUser,
+    //   type:this.props.symbol,
+    //   subType:this.props.location.pathname.split('/')[3],
+    //   correct:xD,
+    //   wrong:10-xD
+    // })
+    // .then(res => {
+    //   this.setState({ showAnswers: true })
+    // })
   }
   render() {
     const { max, showAnswers, showList, answers } = this.state;
