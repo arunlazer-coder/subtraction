@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Validation from '../../../../../utils/Validator'
-import axios from 'axios';
+import Validation from "../../../../../utils/Validator";
+import axios from "axios";
 import { toast } from "react-toastify";
 
 class Mainpage extends Component {
@@ -50,7 +50,7 @@ class Mainpage extends Component {
   }
 
   maxValue(value) {
-    if(Validation.vaildNnumber(value)){
+    if (Validation.vaildNnumber(value)) {
       this.setState({ max: value });
     }
   }
@@ -64,27 +64,32 @@ class Mainpage extends Component {
   }
 
   saveAnswers = (e, index) => {
-      let answers = this.state.answers
-       answers[index] = {...answers[index], answerEntered: Validation.vaildNnumber(e.target.value) ? e.target.value : ""}
-      this.setState({answers})
+    let answers = this.state.answers;
+    answers[index] = {
+      ...answers[index],
+      answerEntered: Validation.vaildNnumber(e.target.value)
+        ? e.target.value
+        : "",
+    };
+    this.setState({ answers });
   };
 
   saveDataApi = () => {
-    toast("Invalid Login !", { position: "top-center" });
-    this.setState({ showAnswers: true })
-    
-    // let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
-    // axios.post(`https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths`, {
-    //   name:this.props.loggedInUser,
-    //   type:this.props.symbol,
-    //   subType:this.props.location.pathname.split('/')[3],
-    //   correct:xD,
-    //   wrong:10-xD
-    // })
-    // .then(res => {
-    //   this.setState({ showAnswers: true })
-    // })
-  }
+    let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
+    const requestOptions = {
+      method: "POST",
+      body: {
+        name: this.props.loggedInUser,
+        type: this.props.symbol,
+        subType: this.props.location.pathname.split("/")[3],
+        correct: xD,
+        wrong: 10 - xD,
+      },
+    };
+    fetch('https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths', requestOptions)
+    .then(response => response.json())
+    .then(data => this.setState({ showAnswers: true }));
+  };
   render() {
     const { max, showAnswers, showList, answers } = this.state;
     return (
@@ -107,7 +112,7 @@ class Mainpage extends Component {
                       showAnswers: false,
                       showList: false,
                       max: "",
-                      answerEnter:[]
+                      answerEnter: [],
                     })
                   }
                 >
@@ -129,23 +134,41 @@ class Mainpage extends Component {
                   answers.map((item, index) => (
                     <tr key={index}>
                       <td key={index + 1} className="text-left bg-grey">
-                        {item.d} 
+                        {item.d}
                       </td>
                       <td key={index + 2} className="text-left bg-green">
                         {showAnswers ? (
                           item.answerEntered == item.c ? (
-                          <>  <span className="correctAnswer">{item.answerEntered}</span><i class="fa fa-check correctAnswer float-right" aria-hidden="true"></i></>
+                            <>
+                              {" "}
+                              <span className="correctAnswer">
+                                {item.answerEntered}
+                              </span>
+                              <i
+                                class="fa fa-check correctAnswer float-right"
+                                aria-hidden="true"
+                              ></i>
+                            </>
                           ) : (
-                           <> <span className="wrongAnswer">{item.answerEntered}</span><i class="fa fa-times wrongAnswer float-right" aria-hidden="true"></i></>
+                            <>
+                              {" "}
+                              <span className="wrongAnswer">
+                                {item.answerEntered}
+                              </span>
+                              <i
+                                class="fa fa-times wrongAnswer float-right"
+                                aria-hidden="true"
+                              ></i>
+                            </>
                           )
                         ) : (
                           <>
-                          <input
-                            type="text"
-                            class="textfield w-50 float-right"
-                            value={item.answerEntered}
-                            onChange={(e) => this.saveAnswers(e,index)}
-                          />
+                            <input
+                              type="text"
+                              class="textfield w-50 float-right"
+                              value={item.answerEntered}
+                              onChange={(e) => this.saveAnswers(e, index)}
+                            />
                           </>
                         )}
                       </td>
@@ -153,23 +176,21 @@ class Mainpage extends Component {
                   ))}
               </tbody>
             </table>
-            {
-              !showAnswers ? 
+            {!showAnswers ? (
               <div className="container-login100-form-btn mt-100">
-              <div className="wrap-login100-form-btn">
-                <div className="login100-form-bgbtn" />
-                <button
-                  className="login100-form-btn"
-                  onClick={() => this.saveDataApi()}
-                >
-                  Show Answers
-                </button>
+                <div className="wrap-login100-form-btn">
+                  <div className="login100-form-bgbtn" />
+                  <button
+                    className="login100-form-btn"
+                    onClick={() => this.saveDataApi()}
+                  >
+                    Show Answers
+                  </button>
+                </div>
               </div>
-            </div>
-            :
-            ""
-            }
-            
+            ) : (
+              ""
+            )}
           </>
         )}
       </div>
@@ -223,7 +244,7 @@ class Form extends Component {
 const mapStateToProps = (state) => {
   return {
     symbol: state.currentAOP,
-    loggedInUser:state.loggedInUser
+    loggedInUser: state.loggedInUser,
   };
 };
 
