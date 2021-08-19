@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Validation from '../../../../../utils/Validator'
-
+import axios from 'axios';
 class Mainpage extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +67,19 @@ class Mainpage extends Component {
       this.setState({answers})
   };
 
+  saveDataApi = () => {
+    let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
+    axios.post(`https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths`, {
+      name:this.props.loggedInUser,
+      type:this.props.symbol,
+      subType:this.props.location.pathname.split('/')[3],
+      correct:xD,
+      wrong:10-xD
+    })
+    .then(res => {
+      this.setState({ showAnswers: true })
+    })
+  }
   render() {
     const { max, showAnswers, showList, answers } = this.state;
     return (
@@ -124,7 +137,7 @@ class Mainpage extends Component {
                           <>
                           <input
                             type="text"
-                            class="textfield"
+                            class="textfield w-50 float-right"
                             value={item.answerEntered}
                             onChange={(e) => this.saveAnswers(e,index)}
                           />
@@ -135,17 +148,23 @@ class Mainpage extends Component {
                   ))}
               </tbody>
             </table>
-            <div className="container-login100-form-btn mt-100">
+            {
+              !showAnswers ? 
+              <div className="container-login100-form-btn mt-100">
               <div className="wrap-login100-form-btn">
                 <div className="login100-form-bgbtn" />
                 <button
                   className="login100-form-btn"
-                  onClick={() => this.setState({ showAnswers: true })}
+                  onClick={() => this.saveDataApi()}
                 >
                   Show Answers
                 </button>
               </div>
             </div>
+            :
+            ""
+            }
+            
           </>
         )}
       </div>
@@ -199,6 +218,7 @@ class Form extends Component {
 const mapStateToProps = (state) => {
   return {
     symbol: state.currentAOP,
+    loggedInUser:state.loggedInUser
   };
 };
 
