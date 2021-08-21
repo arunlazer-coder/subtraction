@@ -7,12 +7,20 @@ export default class ApexChart extends Component {
     this.state = {
       series: [
         {
-          name: "series1",
-          data: [31, 40, 28, 51, 42, 109, 100],
+          name: "add",
+          data: [4, 5, 8, 4, 7, 9, 10],
         },
         {
-          name: "series2",
-          data: [11, 32, 45, 32, 34, 52, 41],
+          name: "sub",
+          data: [3, 7, 8, 8, 9, 7, 3],
+        },
+        {
+          name: "div",
+          data: [1, 2, 3, 4, 5, 6, 3],
+        },
+        {
+          name: "mul",
+          data: [4, 2, 8, 7, 2, 1, 0],
         },
       ],
       options: {
@@ -27,20 +35,20 @@ export default class ApexChart extends Component {
           curve: "smooth",
         },
         xaxis: {
-          type: "datetime",
+          type: "date",
           categories: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z",
+           "Mon",
+           "Tue",
+           "wed",
+           "Thus",
+           "Fri",
+           "Sat",
+           "Sun"
           ],
         },
         tooltip: {
           x: {
-            format: "dd/MM/yy HH:mm",
+            format: "dd/MM/yy",
           },
         },
       },

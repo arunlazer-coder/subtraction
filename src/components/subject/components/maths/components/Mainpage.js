@@ -75,20 +75,23 @@ class Mainpage extends Component {
   };
 
   saveDataApi = () => {
+    const that = this
     let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
-    const requestOptions = {
-      method: "POST",
-      body: {
-        name: this.props.loggedInUser,
-        type: this.props.symbol,
-        subType: this.props.location.pathname.split("/")[3],
-        correct: xD,
-        wrong: 10 - xD,
-      },
-    };
-    fetch('https://vishnuvishuvaapi.herokuapp.com/public/api/v1/maths', requestOptions)
-    .then(response => response.json())
-    .then(data => this.setState({ showAnswers: true }));
+    axios.post('https://vishnuvishuvaapi.herokuapp.com/public/api/maths', {
+      name: this.props.loggedInUser,
+      type: this.props.symbol,
+      subType: this.props.location.pathname.split("/")[3],
+      max:this.state.max,
+      correct: xD,
+      wrong: 10 - xD,
+    })
+    .then(function (response) {
+      that.setState({ showAnswers: true });
+      toast("Data submitted successfully", { position: "top-center" });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
   render() {
     const { max, showAnswers, showList, answers } = this.state;
