@@ -1076,3 +1076,32 @@ padding: 8px 14px;
   color: red;
 }
 
+
+table.customTable {
+  width: 100%;
+  background-color: #FFFFFF;
+  border-collapse: collapse;
+  border-width: 2px;
+  border-color: #7EA8F8;
+  border-style: solid;
+  color: #000000;
+  margin-left: 10px;
+  padding: 72px;
+  margin-top: 19px;
+}
+
+table.customTable td, table.customTable th {
+  border-width: 1px;
+  border-color: #7EA8F8;
+  border-style: solid;
+  padding: 5px;
+  font-size: 15px;
+  color: bisque;
+  background-color: black;
+  font-weight: bolder;
+  letter-spacing: 2px;
+}
+
+table.customTable thead {
+  background-color: #7EA8F8;
+}

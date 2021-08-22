@@ -77,6 +77,11 @@ class Mainpage extends Component {
   };
 
   saveDataApi = () => {
+    var answer = window.confirm("Save data?");
+    if (!answer) {
+        return false
+    }
+    
     const that = this
     let xD = this.state.answers.filter(x => x.answerEntered == x.c).length
     axios.post('https://vishnuvishuvaapi.herokuapp.com/public/api/maths', {
