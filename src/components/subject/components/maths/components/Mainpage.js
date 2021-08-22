@@ -20,8 +20,8 @@ class Mainpage extends Component {
   }
 
   getEquation(symbol) {
-    var a = Math.floor(this.random(0, this.state.max));
-    var b = Math.floor(this.random(0, this.state.max));
+    var a = Math.floor(this.random(2, this.state.max));
+    var b = Math.floor(this.random(2, this.state.max));
     const a1 = Math.max(a, b);
     let b1 = Math.min(a, b);
     let c = 0;
@@ -38,6 +38,7 @@ class Mainpage extends Component {
       case "/":
         b1 = b1.toString().slice(0, 1);
         c = a1 / b1;
+        c = c.toFixed(2)
         break;
       default:
         break;
@@ -68,9 +69,9 @@ class Mainpage extends Component {
     let answers = this.state.answers;
     answers[index] = {
       ...answers[index],
-      answerEntered: Validation.vaildNnumber(e.target.value)
+      answerEntered: this.props.symbol !=='/' ? Validation.vaildNnumber(e.target.value) 
         ? e.target.value
-        : "",
+        : "" : e.target.value,
     };
     this.setState({ answers });
   };
