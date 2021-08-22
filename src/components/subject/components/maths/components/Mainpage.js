@@ -148,7 +148,7 @@ class Mainpage extends Component {
                       </td>
                       <td key={index + 2} className="text-left bg-green">
                         {showAnswers ? (
-                          item.answerEntered == item.c ? (
+                          parseFloat(item.answerEntered) == parseFloat(item.c) ? (
                             <>
                               {" "}
                               <span className="correctAnswer">
