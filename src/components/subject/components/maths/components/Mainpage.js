@@ -23,7 +23,7 @@ class Mainpage extends Component {
     var a = Math.floor(this.random(0, this.state.max));
     var b = Math.floor(this.random(0, this.state.max));
     const a1 = Math.max(a, b);
-    const b1 = Math.min(a, b);
+    let b1 = Math.min(a, b);
     let c = 0;
     switch (symbol) {
       case "-":
@@ -36,6 +36,7 @@ class Mainpage extends Component {
         c = a1 * b1;
         break;
       case "/":
+        b1 = b1.toString().slice(0, 1);
         c = a1 / b1;
         break;
       default:
